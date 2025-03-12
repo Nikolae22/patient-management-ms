@@ -4,6 +4,8 @@ import com.patientservice.dto.PatientRequestDTO;
 import com.patientservice.dto.PatientResponseDTO;
 import com.patientservice.dto.validators.CreatePatientValidationGroup;
 import com.patientservice.service.PatientService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.groups.Default;
 import lombok.RequiredArgsConstructor;
@@ -16,18 +18,23 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/patients")
-@RequiredArgsConstructor
+@Tag(name = "Patient",description = "API for managing Patient")
 public class PatientController {
 
     private final PatientService patientService;
 
+    public PatientController(PatientService patientService) {
+        this.patientService = patientService;
+    }
 
     @GetMapping
+    @Operation(summary = "Get patients")
     public ResponseEntity<List<PatientResponseDTO>> getPatients(){
         return ResponseEntity.ok().body(patientService.getPanties());
     }
 
     @PostMapping
+    @Operation(summary = "Create new Patient")
     public ResponseEntity<PatientResponseDTO> createPatient(
             @RequestBody @Validated({Default.class,
                     CreatePatientValidationGroup.class})
@@ -36,6 +43,7 @@ public class PatientController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Update a Patient")
     public ResponseEntity<PatientResponseDTO> updatePatient(@PathVariable UUID id,
                                                             @RequestBody @Validated({Default.class})
                                                             PatientRequestDTO patientRequestDTO){
@@ -44,7 +52,8 @@ public class PatientController {
         return ResponseEntity.ok().body(patientResponseDTO);
     }
 
-    @DeleteMapping("/{id]")
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Delete patient")
     public ResponseEntity<String> deletePatientById(@PathVariable UUID id){
         patientService.deletePatient(id);
         return ResponseEntity.ok().body("Deleted");

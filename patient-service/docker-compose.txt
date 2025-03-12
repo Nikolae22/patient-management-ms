@@ -1,0 +1,15 @@
+
+services:
+  patient-service-db:
+    image: postgres:latest
+    container_name: patient-service-db
+    environment:
+      POSTGRES_USER: admin_user  # Username per PostgreSQL
+      POSTGRES_PASSWORD: password  # Password per PostgreSQL
+      POSTGRES_DB: db # Nome del database da creare
+    ports:
+      - "5432:5432"  # Mappa la porta 5432 del container sulla porta 5432 del tuo host # Dati persistenti di PostgreSQL
+
+networks:
+  app-network:
+    driver: internal

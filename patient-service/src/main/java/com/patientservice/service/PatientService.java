@@ -15,11 +15,13 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
 public class PatientService {
 
     private final PatientRepository patientRepository;
 
+    public PatientService(PatientRepository patientRepository) {
+        this.patientRepository = patientRepository;
+    }
 
     public List<PatientResponseDTO> getPanties() {
         List<Patient> patients = patientRepository.findAll();

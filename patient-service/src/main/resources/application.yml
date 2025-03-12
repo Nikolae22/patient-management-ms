@@ -1,11 +1,12 @@
 spring:
   application:
    name: patient-service
+   # WE user docker and edit configuration
   datasource:
-    url: jdbc:postgresql://localhost:5432/patient
+    url: jdbc:postgresql://localhost:5432/db
     driver-class-name: org.postgresql.Driver
-    password: we
-    username: we
+    password: password
+    username: admin_user
   jpa:
     hibernate:
       ddl-auto: update

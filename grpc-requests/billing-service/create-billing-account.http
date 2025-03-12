@@ -1,0 +1,8 @@
+#address/nameService/nameGrpcMethod
+GRPC localhost:9001/BillingService/CreateBillingAccount
+
+{
+  "patientId": "12345",
+  "name": "From Grpc",
+  "email": "billing@service.com"
+}
