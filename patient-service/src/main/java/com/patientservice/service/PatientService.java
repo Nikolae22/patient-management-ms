@@ -4,10 +4,10 @@ import com.patientservice.dto.PatientRequestDTO;
 import com.patientservice.dto.PatientResponseDTO;
 import com.patientservice.exception.EmailAlreadyExistsException;
 import com.patientservice.exception.PatientNotFoundException;
+import com.patientservice.grpc.BillingServiceGrpcClient;
 import com.patientservice.mapper.PatientMapper;
 import com.patientservice.model.Patient;
 import com.patientservice.repository.PatientRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -18,9 +18,11 @@ import java.util.UUID;
 public class PatientService {
 
     private final PatientRepository patientRepository;
+    private final BillingServiceGrpcClient billingServiceGrpcClient;
 
-    public PatientService(PatientRepository patientRepository) {
+    public PatientService(PatientRepository patientRepository, BillingServiceGrpcClient billingServiceGrpcClient) {
         this.patientRepository = patientRepository;
+        this.billingServiceGrpcClient = billingServiceGrpcClient;
     }
 
     public List<PatientResponseDTO> getPanties() {
@@ -40,6 +42,12 @@ public class PatientService {
                     patientRequestDTO.getEmail());
         }
         Patient patient = patientRepository.save(PatientMapper.toModel(patientRequestDTO));
+
+        //creiamo ance un account cone la comunicazione tra microservci GRPC
+        billingServiceGrpcClient.createBillingAccount(patient.getId().toString(),
+                patient.getName(),patient.getEmail());
+
+
         return PatientMapper.toDTO(patient);
     }
 

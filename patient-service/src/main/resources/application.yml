@@ -21,3 +21,11 @@ server:
 logging:
   level:
     root: info
+
+
+# for grpc dati
+billing:
+  service:
+    address: billing-service
+    grpc:
+      port: 9001
