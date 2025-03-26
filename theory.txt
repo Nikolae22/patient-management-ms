@@ -1,0 +1,30 @@
+
+
+#in kafak extension:
+si sceglie il bootstrarp server:e si mette la port del kafak docker
+
+topics:  e si crea un topic
+name: patient
+ok
+
+#create kafak consumer:
+topic patient:
+setting : string
+value: bytes base64
+
+start consuming;
+
+#create kafak producer:
+topic patient;
+
+key: stirng
+ test
+
+ value: bytes base64
+  test
+
+ produces
+
+
+
+
