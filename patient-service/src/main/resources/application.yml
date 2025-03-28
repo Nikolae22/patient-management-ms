@@ -1,19 +1,19 @@
 spring:
-  application:
-   name: patient-service
-   # WE user docker and edit configuration
-  datasource:
-    url: jdbc:postgresql://localhost:5432/db
-    driver-class-name: org.postgresql.Driver
-    password: password
-    username: admin_user
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-  sql:
-    init:
-      mode: always
+#  application:
+#   name: patient-service
+#   # WE user docker and edit configuration
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/db
+#    driver-class-name: org.postgresql.Driver
+#    password: password
+#    username: admin_user
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
+#  sql:
+#    init:
+#      mode: always
   kafka:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
@@ -28,7 +28,7 @@ logging:
     root: info
 
 
-# for grpc dati
+# for grpc dati che si potrebbe ceare un config server
 billing:
   service:
     address: billing-service

@@ -1,5 +1,31 @@
 version: '3.8'
 services:
+  patient-service-db:
+    container_name: patient-service-db
+    image: postgres:latest
+    ports:
+      - "5001:5432"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: patient_db
+    networks:
+      - internal
+
+  patient-service:
+    image: patient-service
+    container_name: patient-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://patient-service-db:5432/patient_db
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: password
+    ports:
+      - "8080:8080"
+    depends_on:
+      - patient-service-db  # Assicura che il database sia avviato prima del servizio
+    networks:
+      - internal-network
+
   kafka:
     container_name: kafka
     image: bitnami/kafka:latest
@@ -14,9 +40,10 @@ services:
       KAFKA_CFG_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093,EXTERNAL://:9094
       KAFKA_CFG_NODE_ID: 0
       KAFKA_CFG_PROCESS_ROLES: controller,broker
-
     networks:
       - internal
 
 
-
+networks:
+  internal:
+    driver: bridge
