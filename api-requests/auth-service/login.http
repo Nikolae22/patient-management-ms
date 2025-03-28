@@ -1,0 +1,11 @@
+### Login requiest to retrie a token
+POST http://localhost:40005/login
+Content-Type: application/json
+
+{
+  "email": "testuser@test.com",
+  "password": "password123"
+}
+
+### make request di sopra parse the respone and the body take token value and assigned to the token
+> {% client.global.set("token", response.body.token) %}
